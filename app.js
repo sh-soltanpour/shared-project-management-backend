@@ -2,11 +2,14 @@ const express = require('express'),
     mongoose = require('mongoose'),
     path = require('path'),
     logger = require('morgan'),
-    cookieParser = require('cookie-parser');
+    cookieParser = require('cookie-parser'),
+    cors = require('cors');
+
+
 
 const app = express();
 const PORT = 3000;
-
+app.use(cors());
 mongoose.connect(`mongodb://${process.env.MONGO_HOST || "localhost"}:27017/shared-project-management`, function (err) {
     if (err) throw err;
 });
