@@ -14,6 +14,15 @@ router.get("/", tokenVerifier, async function (req, res) {
     }
 });
 
+router.get("/search", tokenVerifier, async function (req, res) {
+    try {
+        const projects = await Project.find({$text: {$search: req.query.q}});
+        return res.status(200).jsonp(projects);
+    } catch (e) {
+        return res.status(404).jsonp({"message": e.message})
+    }
+});
+
 router.get("/:id", tokenVerifier, async function (req, res) {
     try {
         const project = await Project.findById(req.params.id);
