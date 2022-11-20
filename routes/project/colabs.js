@@ -3,7 +3,9 @@ const express = require("express"),
     mongoose = require('mongoose'),
     Project = mongoose.model("Project"),
     Colab = mongoose.model("Colab"),
+    User = mongoose.model("User"),
     tokenVerifier = require("../middleware/token_verification");
+const Api = require("../../client/discord_client");
 
 router.get("/", tokenVerifier, async function (req, res) {
     try {
@@ -49,6 +51,10 @@ router.put("/:id", tokenVerifier, async function (req, res) {
                 await rejected.save()
             }
         })
+
+        // const discordData = await Api.init(project.title);
+        project.discordLink = "https://discord.com/invite/UvtRNQGAER"
+        await project.save();
 
 
         return res.status(200).jsonp({});

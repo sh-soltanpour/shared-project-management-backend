@@ -8,7 +8,8 @@ const Schema = mongoose.Schema(
         owner: {type: String, ref: "User", required: true, index: true},
         major: {type: String, required: true},
         matched: {type: Boolean, required: true, default: false},
-        imageUrl: {type: String}
+        imageUrl: {type: String},
+        discordLink: {type: String}
     },
     {collection: "projects"}
 );

@@ -29,6 +29,7 @@ const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth/index');
 const imagesRouter = require('./routes/image/index');
 const projectsRouter = require('./routes/project/index');
+const Api = require("./client/discord_client");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -66,6 +67,7 @@ app.use(function (err, req, res, next) {
 // server = app.listen(PORT, () =>
 //     console.log(`Server running on http://localhost:${PORT}`)
 // )
+
 let appServer = app.listen(PORT, () => console.log(`Listening at port ${PORT}`));
 
 ngrok.connect({

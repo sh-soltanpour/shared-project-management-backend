@@ -32,7 +32,6 @@ router.get("/:id", tokenVerifier, async function (req, res) {
         let is_owner = project.owner === req.tokenData.id;
         if (is_owner) {
             colabs = await Colab.find({"project": req.params.id})
-            console.log(colabs)
         } else {
             colab = await Colab.findOne({"project": req.params.id, "creator_user": req.tokenData.id})
         }
