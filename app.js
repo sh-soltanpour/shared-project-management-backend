@@ -8,7 +8,7 @@ const express = require('express'),
 
 
 const app = express();
-const PORT = 3000;
+const PORT = 3001;
 app.use(cors());
 mongoose.connect(`mongodb://${process.env.MONGO_HOST || "localhost"}:27017/shared-project-management`, function (err) {
     if (err) throw err;
@@ -16,11 +16,13 @@ mongoose.connect(`mongodb://${process.env.MONGO_HOST || "localhost"}:27017/share
 
 require('./models/user');
 require('./models/image');
+require('./models/project');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth/index');
 const imagesRouter = require('./routes/image/index');
+const projectsRouter = require('./routes/project/index');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,6 +38,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/images', imagesRouter);
+app.use('/projects', projectsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

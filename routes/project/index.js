@@ -1,5 +1,6 @@
 const express = require("express"),
-    projects = require("./projects");
+    projects = require("./projects"),
+    router = express.Router();
 
 router.use("/", projects);
 

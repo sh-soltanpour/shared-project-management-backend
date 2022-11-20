@@ -11,7 +11,7 @@ router.post("/", async function (req, res) {
         const user = await User.findOne({email: req.body.email});
         if (bcrypt.compareSync(req.body.password, user.password)) {
             return res.status(200).send({
-                accessToken: generateAccessToken(user.email)
+                accessToken: generateAccessToken(user._id.toString(), user.email)
             });
         } else {
             throw new Error();
