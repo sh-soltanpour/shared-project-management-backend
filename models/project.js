@@ -7,6 +7,7 @@ const Schema = mongoose.Schema(
         date_created: {type: Date, required: true, default: Date.now()},
         owner: {type: String, ref: "User", required: true, index: true},
         major: {type: String, required: true},
+        matched: {type: Boolean, required: true, default: false}
     },
     {collection: "projects"}
 );

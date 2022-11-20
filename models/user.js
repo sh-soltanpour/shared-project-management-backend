@@ -7,6 +7,7 @@ const Schema = mongoose.Schema(
         email: {type: String, unique: true, required: true},
         password: {type: String, required: true},
         date_joined: {type: Date, required: true, default: Date.now()},
+        university: {type: String, required: true}
     },
     {collection: "users"}
 );

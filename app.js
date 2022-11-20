@@ -17,6 +17,7 @@ mongoose.connect(`mongodb://${process.env.MONGO_HOST || "localhost"}:27017/share
 require('./models/user');
 require('./models/image');
 require('./models/project');
+require('./models/colab');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');

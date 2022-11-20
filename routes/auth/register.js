@@ -11,15 +11,21 @@ router.post("/", async function (req, res) {
 
     if (await User.exists({email: req.body.email}))
         return res.status(400).send({message: "Email already exists"});
+    try {
+        const user = await new User({
+            ...req.body
+        }).save();
+        return res.status(201).send({
+            accessToken: generateAccessToken(user),
+        });
+    }
+    catch (e) {
+        return res.status(400).send({
+            message: "Parameters missing"
+        });
+    }
 
-    const user = await new User({
-        email: req.body.email,
-        password: req.body.password,
-    }).save();
 
-    return res.status(201).send({
-        accessToken: generateAccessToken(user),
-    });
 });
 
 module.exports = router;
