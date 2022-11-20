@@ -63,4 +63,21 @@ router.put("/:id", tokenVerifier, async function (req, res) {
     }
 });
 
+
+router.delete("/:id", tokenVerifier, async function (req, res) {
+    try {
+        const project = await Project.findOne({"_id": req.projectId, "owner": req.tokenData.id});
+        if (project.matched) {
+            throw new Error("project is already matched")
+        }
+        const colab = await Colab.findOne({"_id": req.params.id, "project": req.projectId});
+        colab.status = "reject"
+        await colab.save()
+
+        return res.status(200).jsonp({});
+    } catch (e) {
+        return res.status(404).jsonp({"message": e.message})
+    }
+});
+
 module.exports = router;

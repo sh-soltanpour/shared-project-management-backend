@@ -9,7 +9,9 @@ const Schema = mongoose.Schema(
         major: {type: String, required: true},
         matched: {type: Boolean, required: true, default: false},
         imageUrl: {type: String},
-        discordLink: {type: String}
+        discordLink: {type: String},
+        university: {type: String},
+        professor: {type: String},
     },
     {collection: "projects"}
 );
