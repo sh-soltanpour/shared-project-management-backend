@@ -3,13 +3,18 @@ const express = require('express'),
     path = require('path'),
     logger = require('morgan'),
     cookieParser = require('cookie-parser'),
-    cors = require('cors');
-
+    cors = require('cors'),
+    ngrok = require('ngrok');
 
 
 const app = express();
 const PORT = 3001;
-app.use(cors());
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.header("Access-Control-Allow-Headers", "*");
+    next();
+});
 mongoose.connect(`mongodb://${process.env.MONGO_HOST || "localhost"}:27017/shared-project-management`, function (err) {
     if (err) throw err;
 });
@@ -62,5 +67,16 @@ app.use(function (err, req, res, next) {
 //     console.log(`Server running on http://localhost:${PORT}`)
 // )
 let appServer = app.listen(PORT, () => console.log(`Listening at port ${PORT}`));
+
+ngrok.connect({
+    proto: 'http',
+    addr: PORT,
+}, (err, url) => {
+    console.log(url);
+    if (err) {
+        console.error('Error while connecting Ngrok', err);
+        return new Error('Ngrok Failed');
+    }
+});
 
 module.exports = appServer;

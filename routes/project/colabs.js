@@ -17,8 +17,11 @@ router.get("/", tokenVerifier, async function (req, res) {
 
 router.post("/", tokenVerifier, async function (req, res) {
     try {
+        const user = await User.findById(req.tokenData.id);
         const colab = await new Colab({
             creator_user: req.tokenData.id,
+            creator_name: user.name,
+            creator_university: user.university,
             project: req.projectId,
             ...req.body
         }).save()
