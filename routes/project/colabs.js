@@ -42,6 +42,15 @@ router.put("/:id", tokenVerifier, async function (req, res) {
         await colab.save()
         project.matched = true;
         await project.save();
+        const colabs = await Colab.find({"project": req.projectId})
+        colabs.forEach(async function (rejected){
+            if (rejected._id.toString() !== colab._id.toString()) {
+                rejected.status = "reject"
+                await rejected.save()
+            }
+        })
+
+
         return res.status(200).jsonp({});
     } catch (e) {
         return res.status(404).jsonp({"message": e.message})

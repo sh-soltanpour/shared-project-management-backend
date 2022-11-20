@@ -8,11 +8,11 @@ const express = require('express'),
 
 
 const app = express();
+app.use(cors());
 const PORT = 3001;
 app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    res.header("Access-Control-Allow-Headers", "*");
     next();
 });
 mongoose.connect(`mongodb://${process.env.MONGO_HOST || "localhost"}:27017/shared-project-management`, function (err) {
